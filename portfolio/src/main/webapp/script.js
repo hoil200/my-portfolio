@@ -32,6 +32,10 @@ function getData(){
     const responsePromise = fetch('/data');
     responsePromise.then(handleResponse);
 
+    fetch('/data').then(respones => response.json()).then((shows) =>{
+        console.log('test');
+    });
+
 }
 
 function handleResponse(response){
