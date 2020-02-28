@@ -17,7 +17,7 @@
  */
 function addRandomGreeting() {
   const greetings =
-      ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
+      ['My favorite color is purple ', 'I am 20 years old', 'Hakuna Matata', 'That was totatally wicked'];
 
   // Pick a random greeting.
   const greeting = greetings[Math.floor(Math.random() * greetings.length)];
@@ -25,4 +25,27 @@ function addRandomGreeting() {
   // Add it to the page.
   const greetingContainer = document.getElementById('greeting-container');
   greetingContainer.innerText = greeting;
+}
+
+function getData(){
+    console.log('Getting data');
+    const responsePromise = fetch('/data');
+    responsePromise.then(handleResponse);
+
+    fetch('/data').then(respones => response.json()).then((shows) =>{
+        console.log('test');
+    });
+
+}
+
+function handleResponse(response){
+    console.log('Handling the response');
+    const textPromise = response.text();
+    textPromise.then(addQuoteToDom);
+}
+
+function addQuoteToDom(show){
+    console.log('Adding quote to the dom:' + show);
+    const showContainer = document.getElementById('show-container');
+    showContainer.innerText = show;
 }
