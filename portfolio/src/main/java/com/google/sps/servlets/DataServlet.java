@@ -28,14 +28,28 @@ import javax.servlet.http.HttpServletResponse;
 public class DataServlet extends HttpServlet {
 
   private ArrayList<String> shows;
-
-  @Override
+ 
+  /*@Override
   public void init(){
       shows = new ArrayList<String>();
       shows.add("The Good Doctor");
       shows.add("Grey\'s Anatomy");
       shows.add("House");
       shows.add("Code Black");
+  }*/
+
+  @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+      shows = new ArrayList<String>();
+      String text = request.getParameter("text-input");
+      
+      shows.add(text);
+
+      Gson gson = new Gson();
+      String json = gson.toJson(shows);
+
+      response.setContentType("text/html;");
+      response.getWriter().println(json);
   }
 
   @Override
@@ -44,19 +58,12 @@ public class DataServlet extends HttpServlet {
     //response.setContentType("text/html;");
     //response.getWriter().println(show);
 
-
     // Convert the server stats to JSON
-    Gson gson = new Gson();
-    String json = gson.toJson(shows);
-    //DataServlet dataServlet = shows;
-    //String json = convertToJsonUsingGson(shows);
-
-
+    //Gson gson = new Gson();
+    //String json = gson.toJson(shows);
+   
     // Send the JSON as the response
-    response.setContentType("text/html;");
-    response.getWriter().println(json);
+    //response.setContentType("text/html;");
+    //response.getWriter().println(json);
   }
-
-
-  
 }

@@ -35,7 +35,6 @@ function getData(){
     fetch('/data').then(respones => response.json()).then((shows) =>{
         console.log('test');
     });
-
 }
 
 function handleResponse(response){
@@ -44,8 +43,8 @@ function handleResponse(response){
     textPromise.then(addQuoteToDom);
 }
 
-function addQuoteToDom(show){
-    console.log('Adding quote to the dom:' + show);
+function addQuoteToDom(shows){
+    console.log('Adding quote to the dom:' + shows);
     const showContainer = document.getElementById('show-container');
-    showContainer.innerText = show;
+    showContainer.innerText = shows;
 }
