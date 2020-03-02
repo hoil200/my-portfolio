@@ -6,9 +6,9 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
-  <body>
+  <body background = "images/background.png">
     <div id="content">
-      <h1 style="background-color:SlateBlue;">Anesia's Portfolio</h1>
+      <h1>Anesia's Portfolio</h1>
       <p>Welcome to my portfolio.</p>
       <p>Click here to get a random message:</p>
       <button onclick="addRandomGreeting()">Message</button>
@@ -24,17 +24,25 @@
             Feel free to add me if you like.</p>
         <p> Also check out my <a href="https://github.com/hoil200">Github</a>
             if you so desire.</p>
-        <button onclick = "getData()">Click for a medical show</button>
-        <div id = "show-container"></div>
-        <br/><br/>
+        
+        <div id="comments"></div>
 
-        <form action = "/data" method = "POST">
+        <body>
+    
+        <form action = "/data" method = "post">
           <p>Leave a comment here</p>
           <textarea name = "text-input"></textarea>
           <br/><br/>
           
           <input type = "submit" />
         </form>
+        <br/>
+        <form action = "/dataStore" method "post">
+            <button onclick = "loadComments()">Show Comments </button>
+        </form>
+
+        </body>
+
     </div>
   </body>
 </html>

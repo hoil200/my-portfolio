@@ -27,17 +27,35 @@ function addRandomGreeting() {
   greetingContainer.innerText = greeting;
 }
 
-function getData(){
-    console.log('Getting data');
+function loadComments(){
+    /*console.log('Getting data');
     const responsePromise = fetch('/data');
-    responsePromise.then(handleResponse);
+    responsePromise.then(handleResponse);*/
 
-    fetch('/data').then(respones => response.json()).then((shows) =>{
-        console.log('test');
+    fetch('/dataStore').then(response => response.json()).then((shows) =>{
+        //console.log('test');
+        const comments = document.getElementById('comments');
+        //comments.inntertext = shows;
+        shows.forEach((text)=>{
+            comments.appendChild(createCommentElement(text));
+        })
     });
 }
 
-function handleResponse(response){
+function createCommentElement(text){
+  const commentElement = document.createElement('text');
+  commentElement.className = 'shows';
+  const showElement = document.createElement('span');
+  showElement.innerText = text.comments
+
+  commentElement.appendChild(showElement);
+
+  return commentElement;
+
+}
+
+
+/*function handleResponse(response){
     console.log('Handling the response');
     const textPromise = response.text();
     textPromise.then(addQuoteToDom);
@@ -47,4 +65,4 @@ function addQuoteToDom(shows){
     console.log('Adding quote to the dom:' + shows);
     const showContainer = document.getElementById('show-container');
     showContainer.innerText = shows;
-}
+}*/

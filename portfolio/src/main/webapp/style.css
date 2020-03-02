@@ -1,7 +1,5 @@
 #content {
-  margin-left: auto;
-  margin-right: auto;
-  width: 650px;
+  text-align: center
 }
 
 #greeting-container {
@@ -11,4 +9,14 @@
 #title{
   text-align: left;
   color: white;    
+}
+
+h1{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color:white
+}
+
+p{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color:white
 }
