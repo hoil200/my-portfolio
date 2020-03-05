@@ -21,7 +21,7 @@ public final class Shows {
   private final String text;
   private final long timestamp;
 
-  public Shows(long id, String text, long timestamp) {
+public Shows(long id, String text, long timestamp) {
     this.id = id;
     this.text = text;
     this.timestamp = timestamp;

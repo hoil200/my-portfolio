@@ -33,7 +33,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/dataStore")
-public class DataServletStore extends HttpServlet {
+public class DataStoreServlet extends HttpServlet {
 
  //private ArrayList<String> shows;
  
@@ -41,7 +41,7 @@ public class DataServletStore extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     
-    Query query = new Query("Comments").addSort("timestamp", SortDirection.DESCENDING);;
+    Query query = new Query("Comments").addSort("timestamp", SortDirection.DESCENDING);
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
 
@@ -61,7 +61,7 @@ public class DataServletStore extends HttpServlet {
     String json = gson.toJson(shows);
    
     // Send the JSON as the response
-    response.setContentType("application/json;");
+    response.setContentType("text/html;");
     response.getWriter().println(json);
   }
 }

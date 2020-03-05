@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+google.charts.load('current', {'packages':['timeline']});
+google.charts.setOnLoadCallback(drawChart);
 /**
  * Adds a random greeting to the page.
  */
@@ -28,16 +30,10 @@ function addRandomGreeting() {
 }
 
 function loadComments(){
-    /*console.log('Getting data');
-    const responsePromise = fetch('/data');
-    responsePromise.then(handleResponse);*/
-
     fetch('/dataStore').then(response => response.json()).then((shows) =>{
-        //console.log('test');
-        const comments = document.getElementById('comments');
-        //comments.inntertext = shows;
-        shows.forEach((text)=>{
-            comments.appendChild(createCommentElement(text));
+        const commentContainer = document.getElementById('comments');
+        shows.forEach((line)=>{
+            commentContainer.appendChild(createCommentElement(line));
         })
     });
 }
@@ -45,8 +41,9 @@ function loadComments(){
 function createCommentElement(text){
   const commentElement = document.createElement('text');
   commentElement.className = 'shows';
-  const showElement = document.createElement('span');
-  showElement.innerText = text.comments
+
+  const showElement = document.createElement('li');
+  showElement.innerText = text;
 
   commentElement.appendChild(showElement);
 
@@ -54,15 +51,29 @@ function createCommentElement(text){
 
 }
 
+function drawChart(){
+    const container = document.getElementById('chart-container');
+    const chart = new google.visualization.Timeline(container);
+    const dataTable = new google.visualization.DataTable();
 
-/*function handleResponse(response){
-    console.log('Handling the response');
-    const textPromise = response.text();
-    textPromise.then(addQuoteToDom);
+    dataTable.addColumn({ type: 'string', id: 'Term' });
+    dataTable.addColumn({ type: 'string', id: 'Name' });
+    dataTable.addColumn({ type: 'date', id: 'Start' });
+    dataTable.addColumn({ type: 'date', id: 'End' });
+
+    dataTable.addRows([
+      [ '1', 'ACM-W', new Date(2018, 9, 1), new Date(2020, 3, 4) ],
+      [ '2', 'Phi Sigma Rho', new Date(2019, 2, 5),  new Date(2020, 3, 4) ]
+      ]);
+
+    const options = {
+      colors: ['#a30ac9', '#99065c'],
+      timeline: { rowLabelStyle: {fontName: 'Lucida Sans Regular', fontSize: 24, color: '#603913' },
+                     barLabelStyle: { fontName: 'Lucida Sans Regular', fontSize: 14 } }
+    };
+
+    chart.draw(dataTable, options);
+  
 }
 
-function addQuoteToDom(shows){
-    console.log('Adding quote to the dom:' + shows);
-    const showContainer = document.getElementById('show-container');
-    showContainer.innerText = shows;
-}*/
+
