@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Anesia's Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <script src ="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="script.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+<div class="topnav">
+  <a href="index.html">Home</a> 
+  <a href="https://drive.google.com/file/d/1G1hWZPanUnQibm7EDl0N7xwUquMjnkXK/view?usp=sharing">Resume</a>
+  <a href="music.html">Music</a>
+</div>
+
+  </head>
+  <body background = "images/background.png">
+    <h1>Girl Scout Cookies</h1>
+    <div id = "cookie-container"></div>
+    <h2>Vote for your favorite cookie</h2>
+    <form action ="/cookie-data" method="post">    
+      <select name="cookie">
+        <option value="ThinMints">Thin Mints</option>
+        <option value="Trefoils">Trefoils</option>
+        <option value="S'mores">S'mores</option>
+        <option value="Samoas">Samoas</option>
+        <option value="Tagalongs">Tagalongs</option>
+        <option value="Savannah">Savannah Smiles</option>
+        <option value="Dosi-si-dos">Do-si-dos</option>
+        <option value="Toffee-Tastic">Toffiee-Tastic</option>
+        <option value="Lemonades">Lemonades</option>
+      </select>
+      <input type="Submit"/>
+    </form>   
+    <br/><br/>
+
+    <body onload = "cookieChart()">
+
+  </body>
+ 
+  </body>
+</html>

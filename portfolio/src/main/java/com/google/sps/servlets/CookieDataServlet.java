@@ -22,8 +22,10 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.gson.Gson;
-import com.google.sps.data.Comments;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.annotation.WebServlet;
@@ -31,34 +33,25 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-//get comments from dataStore and display them
-@WebServlet("/dataStore")
-public class DataStoreServlet extends HttpServlet {
-  
+@WebServlet("/cookie-data")
+public class CookieDataServlet extends HttpServlet {
+
+  private Map<String, Integer> cookieVotes = new HashMap<>();
+
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    
-    Query query = new Query("Comments").addSort("timestamp", SortDirection.DESCENDING);
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    PreparedQuery results = datastore.prepare(query);
-
-    List<Comments> comments = new ArrayList<>();
-    for (Entity entity : results.asIterable()){
-      long id = entity.getKey().getId();  
-      String text = (String) entity.getProperty("text-input");
-      long timestamp = (long) entity.getProperty("timestamp");
-
-      Comments comment = new Comments(id, text, timestamp);
-     
-      comments.add(comment);
-    }
-
-    // Convert the server stats to JSON
+    response.setContentType("application/json");
     Gson gson = new Gson();
-    String json = gson.toJson(comments);
-   
-    // Send the JSON as the response
-    response.setContentType("application/json;");
+    String json = gson.toJson(cookieVotes);
     response.getWriter().println(json);
+  }
+
+  @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    String cookie = request.getParameter("cookie");
+    int currentVotes = cookieVotes.containsKey(cookie) ? cookieVotes.get(cookie) : 0;
+    cookieVotes.put(cookie, currentVotes + 1);
+
+    response.sendRedirect("/cookies.html");
   }
 }

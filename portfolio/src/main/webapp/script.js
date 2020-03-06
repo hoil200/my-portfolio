@@ -13,6 +13,7 @@
 // limitations under the License.
 
 google.charts.load('current', {'packages':['timeline']});
+google.charts.load('current', {'packages':['corecharts']});
 google.charts.setOnLoadCallback(drawChart);
 /**
  * Adds a random greeting to the page.
@@ -30,9 +31,9 @@ function addRandomGreeting() {
 }
 
 function loadComments(){
-    fetch('/dataStore').then(response => response.json()).then((show) =>{
+    fetch('/dataStore').then(response => response.json()).then((comments) =>{
         const commentContainer = document.getElementById('comments');
-        show.forEach((line)=>{
+        comments.forEach((line)=>{
             commentContainer.appendChild(createCommentElement(line));
         })
     });
@@ -40,7 +41,7 @@ function loadComments(){
 
 function createCommentElement(text){
   const commentElement = document.createElement('text');
-  commentElement.className = 'shows';
+  commentElement.className = 'commets';
 
   const showElement = document.createElement('li');
   showElement.innerText = text.text;
@@ -74,6 +75,27 @@ function drawChart(){
 
     chart.draw(dataTable, options);
   
+}
+
+function cookieChart(){
+    fetch('/cookie-data').then(response => response.json()).then((cookieVotes) =>{
+    const data = new google.visualization.DataTable();
+    data.addColumn('string', 'Cookie');
+    data.addColumn('number', 'Votes');
+    Object.keys(cookieVotes).forEach((cookie) => {
+      data.addRow([cookie, cookieVotes[cookie]]);
+    });
+
+    const options = {
+      'title': 'Girl Scout Cookies',
+      'width':600,
+      'height':500
+    };
+
+    const chart = new google.visualization.ColumnChart(
+        document.getElementById('cookie-container'));
+    chart.draw(data, options);
+  });
 }
 
 
