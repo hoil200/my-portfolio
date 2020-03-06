@@ -30,13 +30,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/** Servlet that returns some example content. TODO: modify this file to handle comments data */
+//get comments from user input and store them
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
  
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-      //shows = new ArrayList<String>();
       String text = request.getParameter("text-input");
       long timestamp = System.currentTimeMillis();
 

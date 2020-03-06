@@ -30,9 +30,9 @@ function addRandomGreeting() {
 }
 
 function loadComments(){
-    fetch('/dataStore').then(response => response.json()).then((shows) =>{
+    fetch('/dataStore').then(response => response.json()).then((show) =>{
         const commentContainer = document.getElementById('comments');
-        shows.forEach((line)=>{
+        show.forEach((line)=>{
             commentContainer.appendChild(createCommentElement(line));
         })
     });
@@ -43,7 +43,7 @@ function createCommentElement(text){
   commentElement.className = 'shows';
 
   const showElement = document.createElement('li');
-  showElement.innerText = text;
+  showElement.innerText = text.text;
 
   commentElement.appendChild(showElement);
 

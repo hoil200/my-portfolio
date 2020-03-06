@@ -22,7 +22,7 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.gson.Gson;
-import com.google.sps.data.Shows;
+import com.google.sps.data.Show;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,12 +31,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/** Servlet that returns some example content. TODO: modify this file to handle comments data */
+//get comments from dataStore and display them
 @WebServlet("/dataStore")
 public class DataStoreServlet extends HttpServlet {
-
- //private ArrayList<String> shows;
- 
   
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -45,23 +42,23 @@ public class DataStoreServlet extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
 
-    List<Shows> shows = new ArrayList<>();
+    List<Show> show = new ArrayList<>();
     for (Entity entity : results.asIterable()){
       long id = entity.getKey().getId();  
       String text = (String) entity.getProperty("text-input");
       long timestamp = (long) entity.getProperty("timestamp");
 
-      Shows texts = new Shows(id, text, timestamp);
+      Show shows = new Show(id, text, timestamp);
      
-      shows.add(texts);
+      show.add(shows);
     }
 
     // Convert the server stats to JSON
     Gson gson = new Gson();
-    String json = gson.toJson(shows);
+    String json = gson.toJson(show);
    
     // Send the JSON as the response
-    response.setContentType("text/html;");
+    response.setContentType("application/json;");
     response.getWriter().println(json);
   }
 }
