@@ -13,8 +13,9 @@
 // limitations under the License.
 
 google.charts.load('current', {'packages':['timeline']});
-google.charts.load('current', {'packages':['corecharts']});
+google.charts.load('current', {'packages':['corechart']});
 google.charts.setOnLoadCallback(drawChart);
+google.charts.setOnLoadCallback(drawCookieChart);
 /**
  * Adds a random greeting to the page.
  */
@@ -77,7 +78,7 @@ function drawChart(){
   
 }
 
-function cookieChart(){
+function drawCookieChart(){
     fetch('/cookie-data').then(response => response.json()).then((cookieVotes) =>{
     const data = new google.visualization.DataTable();
     data.addColumn('string', 'Cookie');
