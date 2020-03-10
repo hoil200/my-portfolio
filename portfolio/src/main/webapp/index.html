@@ -4,11 +4,21 @@
     <meta charset="UTF-8">
     <title>Anesia's Portfolio</title>
     <link rel="stylesheet" href="style.css">
+    <script src ="https://www.gstatic.com/charts/loader.js"></script>
     <script src="script.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+<div class="topnav">
+  <a href="https://drive.google.com/file/d/1G1hWZPanUnQibm7EDl0N7xwUquMjnkXK/view?usp=sharing">Resume</a>
+  <a href="music.html">Music</a>
+</div>
+
   </head>
-  <body>
+  <body background = "images/background.png">
     <div id="content">
-      <h1 style="background-color:SlateBlue;">Anesia's Portfolio</h1>
+      <h1>Anesia's Portfolio</h1>
       <p>Welcome to my portfolio.</p>
       <p>Click here to get a random message:</p>
       <button onclick="addRandomGreeting()">Message</button>
@@ -19,13 +29,36 @@
           food is lasagna.</p>
           <p> This is a picture of me, my mom, and my brother. </p>
         <img src="images/Anesia.jpg" atl="Me, my mom, and brother" width="200" height="225">
-        <p>Click<a href="music.html"> for a list of my favorite music </a></p>
+        <p>Click<a href="cookies.html"> for a Girl Scout Cookies survey </a></p>
         <p>Check out my <a href="https://www.linkedin.com/in/anesia-pierce/">LinkedIn</a> profile.
             Feel free to add me if you like.</p>
         <p> Also check out my <a href="https://github.com/hoil200">Github</a>
             if you so desire.</p>
-        <button onclick = "getData()">Click for a medical show</button>
-        <div id = "show-container"></div>
+        <h1> School Activities </h1>
+        <div id="chart-container"></div>
+        <body onload= "drawChart()">
+
+        </body>    
+        
+        <body>   
+            
+        <form action = "/data" method = "post">
+          <h2>Leave a comment here</h2>
+          <textarea name = "text-input"></textarea>
+          <br/><br/>
+          
+          <input type = "submit" />
+        </form>
+        <br/>
+
+        <button onclick="loadComments()">Show Comments </button> 
+        
+        <p id="comments"></p>
+
+
+        </body>
+       
+    </body>
     </div>
   </body>
 </html>

@@ -23,6 +23,9 @@ import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.gson.Gson;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.annotation.WebServlet;
@@ -30,23 +33,25 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-//get comments from user input and store them
-@WebServlet("/data")
-public class DataServlet extends HttpServlet {
- 
+@WebServlet("/cookie-data")
+public class CookieDataServlet extends HttpServlet {
+
+  private Map<String, Integer> cookieVotes = new HashMap<>();
+
+  @Override
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    response.setContentType("application/json");
+    Gson gson = new Gson();
+    String json = gson.toJson(cookieVotes);
+    response.getWriter().println(json);
+  }
+
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-      String text = request.getParameter("text-input");
-      long timestamp = System.currentTimeMillis();
+    String cookie = request.getParameter("cookie");
+    int currentVotes = cookieVotes.containsKey(cookie) ? cookieVotes.get(cookie) : 0;
+    cookieVotes.put(cookie, currentVotes + 1);
 
-      Entity taskEntity = new Entity("Comments");
-      taskEntity.setProperty("text-input",text);
-      taskEntity.setProperty("timestamp", timestamp);
-
-      DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-      datastore.put(taskEntity);
-
-    response.sendRedirect("/index.html"); 
-
+    response.sendRedirect("/cookies.html");
   }
 }

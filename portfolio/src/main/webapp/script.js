@@ -12,6 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+google.charts.load('current', {'packages':['timeline']});
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+google.charts.setOnLoadCallback(drawCookieChart);
 /**
  * Adds a random greeting to the page.
  */
@@ -27,25 +31,72 @@ function addRandomGreeting() {
   greetingContainer.innerText = greeting;
 }
 
-function getData(){
-    console.log('Getting data');
-    const responsePromise = fetch('/data');
-    responsePromise.then(handleResponse);
+function loadComments(){
+    fetch('/dataStore').then(response => response.json()).then((comments) =>{
+        const commentContainer = document.getElementById('comments');
+        comments.forEach((line)=>{
+            commentContainer.appendChild(createCommentElement(line));
+        })
+    });
+}
 
-    fetch('/data').then(respones => response.json()).then((shows) =>{
-        console.log('test');
+function createCommentElement(text){
+  const commentElement = document.createElement('text');
+  commentElement.className = 'commets';
+
+  const showElement = document.createElement('li');
+  showElement.innerText = text.text;
+
+  commentElement.appendChild(showElement);
+
+  return commentElement;
+
+}
+
+function drawChart(){
+    const container = document.getElementById('chart-container');
+    const chart = new google.visualization.Timeline(container);
+    const dataTable = new google.visualization.DataTable();
+
+    dataTable.addColumn({ type: 'string', id: 'Term' });
+    dataTable.addColumn({ type: 'string', id: 'Name' });
+    dataTable.addColumn({ type: 'date', id: 'Start' });
+    dataTable.addColumn({ type: 'date', id: 'End' });
+
+    dataTable.addRows([
+      [ '1', 'ACM-W', new Date(2018, 9, 1), new Date(2020, 3, 4) ],
+      [ '2', 'Phi Sigma Rho', new Date(2019, 2, 5),  new Date(2020, 3, 4) ]
+      ]);
+
+    const options = {
+      colors: ['#a30ac9', '#99065c'],
+      timeline: { rowLabelStyle: {fontName: 'Lucida Sans Regular', fontSize: 24, color: '#603913' },
+                     barLabelStyle: { fontName: 'Lucida Sans Regular', fontSize: 14 } }
+    };
+
+    chart.draw(dataTable, options);
+  
+}
+
+function drawCookieChart(){
+    fetch('/cookie-data').then(response => response.json()).then((cookieVotes) =>{
+    const data = new google.visualization.DataTable();
+    data.addColumn('string', 'Cookie');
+    data.addColumn('number', 'Votes');
+    Object.keys(cookieVotes).forEach((cookie) => {
+      data.addRow([cookie, cookieVotes[cookie]]);
     });
 
+    const options = {
+      'title': 'Girl Scout Cookies',
+      'width':600,
+      'height':500
+    };
+
+    const chart = new google.visualization.ColumnChart(
+        document.getElementById('cookie-container'));
+    chart.draw(data, options);
+  });
 }
 
-function handleResponse(response){
-    console.log('Handling the response');
-    const textPromise = response.text();
-    textPromise.then(addQuoteToDom);
-}
 
-function addQuoteToDom(show){
-    console.log('Adding quote to the dom:' + show);
-    const showContainer = document.getElementById('show-container');
-    showContainer.innerText = show;
-}
