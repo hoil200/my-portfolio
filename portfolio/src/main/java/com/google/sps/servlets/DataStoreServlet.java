@@ -47,8 +47,9 @@ public class DataStoreServlet extends HttpServlet {
       long id = entity.getKey().getId();  
       String text = (String) entity.getProperty("text-input");
       long timestamp = (long) entity.getProperty("timestamp");
+      String name = (String) entity.getProperty("nickname");
 
-      Comments comment = new Comments(id, text, timestamp);
+      Comments comment = new Comments(id, text, name, timestamp);
      
       comments.add(comment);
     }

@@ -37,11 +37,13 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
       String text = request.getParameter("text-input");
+      String name = (String)request.getAttribute("nickname");
       long timestamp = System.currentTimeMillis();
 
       Entity taskEntity = new Entity("Comments");
       taskEntity.setProperty("text-input",text);
       taskEntity.setProperty("timestamp", timestamp);
+      taskEntity.setProperty("nickname",name);
 
       DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
       datastore.put(taskEntity);
